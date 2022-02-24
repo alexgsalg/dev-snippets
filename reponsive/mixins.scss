@@ -1,0 +1,67 @@
+/*
+Responsive design mixins and Snippets
+- Media queries manager
+- Global responsive font (html)
+- Images responsive
+//
+//
+*/
+/*============================================*/
+
+/* MEDIA QUEIRES MANAGER
+  0 - 600px:    Phone
+  600 - 900px   Tablet Portrait
+  900 - 1200px  Tablet Landscape
+  1200 - 1800   Desktop - default styles
+  1200px + =   Big Desktop
+//
+  $breakpoint arguments:
+  - phone
+  - tabport
+  - tabland
+  - desktop
+  - bigdesktop
+*/
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == phone {
+      @media screen and (max-width:600px) { @content };
+  }
+  @if $breakpoint == tabport {
+      @media screen and (max-width:900px) { @content };
+  }
+  @if $breakpoint == tabland {
+      @media screen and (max-width:1200px) { @content };
+  }
+  @if $breakpoint == bigdesktop {
+      @media screen and (min-width:1800px) { @content };
+  }
+}
+
+/*============================================*/
+
+/* GLOBAL RESPONSIVE FONT 
+  Font responsivity added to the html element
+  Mobile first based
+//
+*/
+html {
+  font-size: 62.5%; // makes global font = 10px
+  // 10px = 1rem - more easy to calculate and use rem
+
+  @include responsive(tabland) { // width < 1200px
+    font-size: 56.25%; // global font = 9px
+  }
+  @include responsive(tabport) { // width < 900px
+    font-size: 50%; // global font = 8px
+  }
+  @include responsive(phone) { // width < 600px
+    // font-size: 45%; // global font = 8px
+  }
+  @include responsive(bigdesktop) {
+    font-size: 75%; // global font = 12px
+  }
+}
+
+
+/*============================================*/
